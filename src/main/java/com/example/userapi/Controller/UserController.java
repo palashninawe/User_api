@@ -1,6 +1,9 @@
 package com.example.userapi.Controller;
 
+import java.util.Optional;
+
 //import jakarta.validation.Valid;
+import com.example.userapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -15,6 +18,17 @@ public class UserController {
 
 	 @Autowired
 	    private UserService userService;
+	 
+	 @Autowired
+	    private UserRepository userRepository;
+	 
+	 @GetMapping("/{id}")
+	    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+	        Optional<User> user = userRepository.findById(id);
+
+	        return user.map(ResponseEntity::ok)
+	                   .orElseGet(() -> ResponseEntity.notFound().build());
+	    }
 
 	    @PostMapping("/register")
 	    public ResponseEntity<?> registerUser(@Validated @RequestBody User user) {
