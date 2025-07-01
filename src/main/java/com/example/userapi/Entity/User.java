@@ -1,6 +1,7 @@
 package com.example.userapi.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 
 @Entity
@@ -11,15 +12,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+	@NotBlank(message = "Username is required")
     @Column(nullable = false, unique = true)
     private String username;
 
-
+	@Email(message = "Invalid email format")
+    @NotBlank(message = "Email is required")
     @Column(nullable = false, unique = true)
     private String email;
 
-
+	@Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
     // Constructors

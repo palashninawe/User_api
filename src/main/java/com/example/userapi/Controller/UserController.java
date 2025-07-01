@@ -2,11 +2,10 @@ package com.example.userapi.Controller;
 
 import java.util.Optional;
 
-//import jakarta.validation.Valid;
+import jakarta.validation.Valid;
 import com.example.userapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.userapi.Entity.User;
@@ -31,7 +30,7 @@ public class UserController {
 	    }
 
 	    @PostMapping("/register")
-	    public ResponseEntity<?> registerUser(@Validated @RequestBody User user) {
+	    public ResponseEntity<?> registerUser(@Valid @RequestBody User user) {
 
 	        if (userService.isUsernameTaken(user.getUsername())) {
 	            return ResponseEntity.badRequest().body("Username is already taken");
